@@ -1,0 +1,6 @@
+[submodule "public/bootstrap"]
+	path = public/bootstrap
+	url = https://github.com/twbs/bootstrap
+[submodule "public/javascripts/jquery"]
+	path = public/javascripts/jquery
+	url = https://github.com/jquery/jquery
