@@ -1,7 +1,6 @@
-var http = require('http');
+require('mongoose').connect('mongodb://localhost/plants');
 var path = require('path');
 var express = require('express');
-var Resouce = require('express-resource');
 var app = express();
 
 
@@ -24,8 +23,13 @@ if ('development' == app.get('env')) {
   app.use(express.errorHandler());
 }
 
-['plants'].forEach(function (res) {
-	app.resource(res, require('./routes/' + res));
+
+// routes
+var plants = require('./routes/plants')(app);
+app.get('/', function (req, res, next) { res.redirect('/plants') });
+app.use(function (err, req, res, next) {
+	console.error('ERROR HANDLER CALLED');
+	res.send(404, '404 error');
 });
 
 app.listen(app.get('port'));

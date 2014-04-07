@@ -1,23 +1,21 @@
-doctype html
-html(lang='fr')
-	include ../header.jade
-body
-	.container
-		table.table-striped.table
-			thead
-				tr
-					th Nom
-					th Action
-			tbody
-				each plant in plants
-					tr
-						td
-							li= plant.name
-						td
-							form.form-inline(role="form", method='post', action='/plants/#{plant._id}')
-								input(type='hidden', name='_method', value='delete')
-								div.form-group
-									button.btn.btn-xs(type='submit') Supprimer
-									a.btn.btn-xs(role='button', href='/plants/#{plant._id}/edit') Modifier
-		a.btn(href='/plants/new') Ajouter
-	include ../footer.jade
+extends ../layout
+block content
+	- var arr = [];
+	while ((arr = plants.splice(0, 4)).length)
+		.row
+			each plant in arr
+				.col-xs-6.col-md-3
+					.thumbnail
+						img(src='/images/#{plant.image}', alt=plant.name)
+						.caption
+							h3= plant.name
+							p Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a diam lectus. Sed sit amet ipsum mauris. Maecenas congue ligula ac quam viverra nec consectetur ante hendrerit. Donec et mollis dolor. Praesent et diam eget libero egestas mattis sit amet vitae augue. 
+							p
+								form(role='form', method='post', action='/plants/#{plant._id}')
+									a.btn.btn-default.btn-primary(role='button', href='/plants/#{plant._id}/edit') Modifier 
+										span.glyphicon.glyphicon-edit
+									input(type='hidden', name='_method', value='delete')
+									button.btn.btn-danger.pull-right(type='submit') Supprimer 
+										span.glyphicon.glyphicon-trash
+	a.btn.btn-primary.btn-lg.btn-block(href='/plants/new') Ajouter une nouvelle plante 
+		span.glyphicon.glyphicon-plus-sign

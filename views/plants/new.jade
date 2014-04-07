@@ -1,13 +1,9 @@
-doctype html
-html(lang='fr')
-	include ../header.jade
-body
-	.container
-		form(action='/plants' method='post')
-			.form-group
-				label(for="nom") Nom
-				input#nom.form-control(name="name", placeholder="Nom de la plante")
-			.form-group
-				button.btn.btn-default(type="submit") Ajouter
-	include ../footer.jade
+extends ../layout
+block content
+	form(action='/plants' method='post')
+		.form-group
+			label(for="nom") Nom
+			input#nom.form-control(name="name", placeholder="Nom de la plante")
+		.form-group
+			button.btn.btn-default(type="submit") Ajouter
 
