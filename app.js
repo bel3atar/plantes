@@ -19,19 +19,19 @@ app.use(express.session());
 app.use(app.router);
 
 app.use(express.static(path.join(__dirname, 'public')));
-if ('development' == app.get('env')) {
-	app.locals.pretty = true;
-  app.use(express.errorHandler());
-}
-
-
 // routes
 var plants = require('./routes/plants')(app);
 app.get('/', function (req, res, next) { res.redirect('/plants') });
+if ('development' == app.get('env')) {
+	app.locals.pretty = true;
+  //app.use(express.errorHandler());
+}
 app.use(function (err, req, res, next) {
-	console.error('ERROR HANDLER CALLED');
-	res.send(404, '404 error');
+	console.error(err.stack);
+	res.status(404);
+	res.render('error', {error: req.path});
 });
+
 
 app.listen(app.get('port'));
 console.log('Express server listening on port ' + app.get('port'));
