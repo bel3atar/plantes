@@ -1,0 +1,9 @@
+extends ../layout
+block content
+	.jumbotron
+		.row
+			.col-md-8
+				h1= plant.name
+				p= plant.desc
+			.col-md-4
+				img.img-thumbnail(src='/images/#{plant.image}', alt=plant.name)

@@ -1,9 +1,12 @@
 extends ../layout
 block content
-	form(action='/plants/#{plant._id}', method='post')
+	form(action='/plants/#{plant._id}', role='form', method='post')
 		input(type='hidden', name='_method', value='put')
 		.form-group
 			label(for="nom") Nom
 			input#nom.form-control(value=plant.name, name="name", placeholder="Nom de la plante")
+		.form-group
+			label(for="desc") Description
+			textarea#desc.form-control(name='desc')= plant.desc
 		.form-group
 			button.btnbtn-default(type="submit") Modifier

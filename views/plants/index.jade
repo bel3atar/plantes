@@ -3,19 +3,46 @@ block content
 	- var arr = [];
 	while ((arr = plants.splice(0, 4)).length)
 		.row
-			each plant in arr
-				.col-xs-6.col-md-3
-					.thumbnail
-						img(src='/images/#{plant.image}', alt=plant.name)
+			each plant, index in arr
+				.col-sm-6.col-md-3
+					.thumbnail(id="#{plant._id}")
+						a(href='/plants/#{plant._id}'): img(src='/images/#{plant.image}', alt=plant.name)
 						.caption
 							h3= plant.name
-							p Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec a diam lectus. Sed sit amet ipsum mauris. Maecenas congue ligula ac quam viverra nec consectetur ante hendrerit. Donec et mollis dolor. Praesent et diam eget libero egestas mattis sit amet vitae augue. 
-							p
-								form(role='form', method='post', action='/plants/#{plant._id}')
+							//- p= plant.desc
+							p: .row
+								.btn-group-vertical.col-xs-12
 									a.btn.btn-default.btn-primary(role='button', href='/plants/#{plant._id}/edit') Modifier 
 										span.glyphicon.glyphicon-edit
-									input(type='hidden', name='_method', value='delete')
-									button.btn.btn-danger.pull-right(type='submit') Supprimer 
+									button.btn.btn-danger(type='button', data-toggle='modal', data-del="#{plant._id}") Supprimer 
 										span.glyphicon.glyphicon-trash
+				if index % 2 !== 0
+					.clearfix.visible-sm
 	a.btn.btn-primary.btn-lg.btn-block(href='/plants/new') Ajouter une nouvelle plante 
 		span.glyphicon.glyphicon-plus-sign
+
+
+	.modal.fade#deleteModal(aria-hidden='true', aria-labelledby='deleteModal')
+		.modal-dialog
+			.modal-content
+				.modal-header
+					button.close(id='btnCloseModal', type='button', data-dismiss='modal', aria-hidden='true') &times;
+					h4.modal-title
+						| Supprimer 
+						b#modPlantName
+						| ?
+				.modal-body
+					p Si vous supprimer cet élément vous ne pourrez plus le récupérer par la suite&hellip;
+				.modal-footer: form(method='post', id='modDeleteForm')
+					input(type='hidden', name='_method', value='delete')
+					button.btn.btn-default(data-dismiss='modal', type='button') Fermer
+					button.btn.btn-primary.btn-danger#btnConfirmDeletePlant(type='submit') Supprimer
+	script.
+		$('button[data-del]').each(function () {
+			$(this).click(function () {
+				var id = this.getAttribute('data-del'), name = $('#' + id + ' img').attr('alt');
+				$('#modDeleteForm').attr('action', '/plants/' + id);
+				$('b#modPlantName').text(name);
+				$('#deleteModal').modal();
+			});
+		});

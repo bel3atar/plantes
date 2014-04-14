@@ -20,6 +20,7 @@ app.use(app.router);
 
 app.use(express.static(path.join(__dirname, 'public')));
 if ('development' == app.get('env')) {
+	app.locals.pretty = true;
   app.use(express.errorHandler());
 }
 
