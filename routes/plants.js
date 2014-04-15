@@ -1,5 +1,9 @@
 var Plant = require('../models/plant');
 module.exports = function (app) {
+	//new
+	app.get('/plants/new', function (req, res, next) {
+		res.render('plants/new', {title: 'Nouvelle plante'});
+	});
 	//show
 	app.get('/plants/:plant', function (req, res, next) {
 		Plant.findById(req.params.plant, function (err, plant) {
@@ -13,10 +17,6 @@ module.exports = function (app) {
 			if (err) next(err);
 			res.render('plants/index', {plants: plants, title: 'Liste des plantes'});
 		});
-	});
-	//new
-	app.get('/plants/new', function (req, res, next) {
-		res.render('plants/new', {title: 'Nouvelle plante'});
 	});
 	//create
 	app.post('/plants', function (req, res, next) {
@@ -52,4 +52,6 @@ module.exports = function (app) {
 			}
 		);
 	});
+	//sub-resources
+	require('./lots.js')(app);
 };

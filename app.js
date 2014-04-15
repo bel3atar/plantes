@@ -19,17 +19,23 @@ app.use(express.session());
 app.use(app.router);
 
 app.use(express.static(path.join(__dirname, 'public')));
-// routes
-var plants = require('./routes/plants')(app);
+
+require('./routes/plants')(app);
+
 app.get('/', function (req, res, next) { res.redirect('/plants') });
 if ('development' == app.get('env')) {
 	app.locals.pretty = true;
   //app.use(express.errorHandler());
 }
+app.use(function (req, res, next) {
+	res.status(404);
+	res.render('error', {title: 'Erreur 404', error: req.path});
+});
+
 app.use(function (err, req, res, next) {
 	console.error(err.stack);
-	res.status(404);
-	res.render('error', {error: req.path});
+	res.status(500);
+	res.render('error', {title: 'Erreur 500', error: req.path});
 });
 
 

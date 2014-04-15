@@ -1,0 +1,12 @@
+extends ../../layout
+block content
+	if lots.length !== 0
+		.row
+			h1 Lots de <em>#{plant}</em>
+			table.table.table-striped
+	else
+		.jumbotron
+			h1 Pas de lots
+			p Il n'y a pas de lots en stock pour la plante #{plant}
+	a.btn.btn-block.btn-primary(href='/plants/#{id}/lots/new') Nouveau lot 
+		span.glyphicon.glyphicon-plus-sign

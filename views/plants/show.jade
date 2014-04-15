@@ -5,5 +5,8 @@ block content
 			.col-md-8
 				h1= plant.name
 				p= plant.desc
+				p
+					a.btn.btn-primary(href='/plants/#{plant._id}/lots') Lots en stock 
+						span.glyphicon.glyphicon-log-in
 			.col-md-4
 				img.img-thumbnail(src='/images/#{plant.image}', alt=plant.name)

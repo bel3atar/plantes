@@ -4,8 +4,9 @@ var schema = new mongoose.Schema({
 	desc : String,
 	image: String,
 	lots: [{
+		_id   : {type: mongoose.Schema.Types.ObjectId, index: true},
 		price : Number,
-		date  : Date,
+		date  : {type: Date, default: Date.now},
 		seller: {
 			name   : String,
 			address: String,
@@ -16,7 +17,7 @@ var schema = new mongoose.Schema({
 			}
 		},
 		sales: [{
-			date : Date,
+			date : {type: Date, default: Date.now},
 			price: Number,
 			buyer: {
 				name   : String,

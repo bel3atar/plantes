@@ -1,9 +1,11 @@
 extends ../layout
 block content
-	form(action='/plants' method='post')
+	form(action='/plants', role='form', method='post')
 		.form-group
 			label(for="nom") Nom
 			input#nom.form-control(name="name", placeholder="Nom de la plante")
 		.form-group
-			button.btn.btn-default(type="submit") Ajouter
-
+			label(for="desc") Description
+			textarea#desc.form-control(name='desc')
+		.form-group
+			button.btnbtn-default(type="submit") Modifier
