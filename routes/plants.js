@@ -7,7 +7,7 @@ module.exports = function (app) {
 	//show
 	app.get('/plants/:plant', function (req, res, next) {
 		Plant.findById(req.params.plant, function (err, plant) {
-			if (err) next(err);
+			if (err || !plant) next(err);
 			else res.render('plants/show', {plant: plant, title: plant.name});
 		});
 	});

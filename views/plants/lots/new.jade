@@ -1,19 +1,21 @@
 extends ../../layout
 block content
+	h1 Nouveau lot
 	form(role='form', method='post', action='/plants/#{plant}/lots')
 		.form-group
-			label(for='weight') Poids
+			label(for='quantity') Quantité
 			.input-group-lg.input-group
-				input.form-control(type='number', min=0, name='weight', id='weight')
+				input.form-control(step='0.01', type='number', min=0, name='quantity', id='quantity')
 				span.input-group-addon kg
 		.form-group: .input-group-lg
 			label(for='price') Prix
 			.input-group-lg.input-group
 				span.input-group-addon MAD
-				input.form-control(type='number', min=0, name='price', id='price')
+				input.form-control(step='0.01', type='number', min=0, name='price', id='price')
 		.form-group: .input-group-lg
 			label(for='date') Date
 			input.form-control(type='date', name='date', id='date')
 		.form-group: .input-group-lg
 			button.btn.btn-primary.btn-lg.btn-block(type='submit') Ajouter 
 				span.glyphicon.glyphicon-plus-sign
+	script document.getElementById('date').valueAsDate = new Date();
