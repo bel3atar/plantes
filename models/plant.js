@@ -9,17 +9,18 @@ var schema = new mongoose.Schema({
 		quantity: Number,
 		date    : Date,
 		seller  : {
-			name   : String,
-			address: String,
-			phone  : String,
+			name : String,
+			tel  : String,
 			loc    : {
-				lon: Number,
-				lat: Number
+				lon : Number,
+				lat : Number,
+				zoom: Number
 			}
 		},
 		outs: [{
 			date : Date,
-			quantity: Number
+			raw: Number,
+			net: Number,
 		}]
 	}]
 });

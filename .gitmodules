@@ -4,3 +4,15 @@
 [submodule "public/javascripts/jquery"]
 	path = public/javascripts/jquery
 	url = https://github.com/jquery/jquery
+[submodule "public/javascripts/knockout"]
+	path = public/javascripts/knockout
+	url = https://github.com/knockout/knockout
+[submodule "public/javascripts/jquery-position-picker"]
+	path = public/javascripts/jquery-position-picker
+	url = https://github.com/Odyno/jquery-position-picker
+[submodule "public/javascripts/openlayers"]
+	path = public/javascripts/openlayers
+	url = https://github.com/openlayers/openlayers
+[submodule "public/javascripts/jquery-latitude-longitude-picker-gmaps"]
+	path = public/javascripts/jquery-latitude-longitude-picker-gmaps
+	url = https://github.com/wimagguc/jquery-latitude-longitude-picker-gmaps

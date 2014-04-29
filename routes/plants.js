@@ -13,7 +13,7 @@ module.exports = function (app) {
 	});
 	//index
 	app.get('/plants', function (req, res, next) {
-		Plant.find(function (err, plants) {
+		Plant.find().sort('name').exec(function (err, plants) {
 			if (err) next(err);
 			res.render('plants/index', {plants: plants, title: 'Liste des plantes'});
 		});

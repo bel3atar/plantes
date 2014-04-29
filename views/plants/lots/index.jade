@@ -1,51 +1,31 @@
 extends ../../layout
 block content
 	if lots.length !== 0
-		style.
-			tbody tr { cursor: pointer }
+		style tbody tr { cursor: pointer }
 		.row
-			h1 Lots de <em>#{plant}</em>
+			h1 Lots en stock de <em>#{plant}</em>
 			.table-responsive: table.table.table-hover.table-striped
 				thead
 					th Date
 					th Quantité (kg)
-					th Montat (MAD)
+					th Reste (kg)
+					th Montant (MAD)
+					th Vendeur
+					th Téléphone
 				tbody
 					each lot in lots
-						tr(id=lot._id)
-							td= lot.date
+						tr(data-target='#modal', data-toggle='modal', data-bind="click: setLotId('#{lot._id}')")
+							td(data-bind="localeDate: '#{lot.date}'")
 							td= lot.quantity
+							td= lot.remaining
 							td= lot.price
-		.modal.fade(role='dialog', aria-labelledby='outsModal'): .modal-dialog
-			.modal-content
-				.modal-header
-					button.close(type='button', data-dismiss='modal', aria-hdden='true') &times;
-					h4.modal-title Sorties vers production du lot
-				.modal-body
-					#status Chargement des données depuis le serveur...
-					.table-responsive: table.table-striped.table-hover.table
-						thead
-							th Date
-							th Quantité
-						tbody#outs
-					#newOut
-						form.from-horizontal(role='form', method='post')
-							fieldset: legend Nouvelle sortie
-								.form-group
-									label.control-label(for='date') Date
-									input#date.form-control.input-lg(type='date', name='date')
-								.form-group
-									label.control-label(for='quantity') Quantité
-									input#quantity.form-control.input-lg(type='number', min=0, name='quantity')
-								button.btn.btn-primary.btn-block.btn-lg(type='button') Ajouter 
-									span.glyphicon.glyphicon-plus-sign
-				.modal-footer
-					button.btn.btn-default(data-dismiss='modal', type='button') Fermer
-					button.btn.btn-primary(type='button') Nouvelle sortie
+							td= lot.seller.name
+							td= lot.seller.tel
+		include outsModal
 		script(src='/javascripts/lots.js')
 	else
 		.jumbotron
 			h1 Pas de lots
 			p Il n'y a pas de lots en stock pour la plante #{plant}
-	a.btn-lg.btn.btn-block.btn-primary(href='/plants/#{id}/lots/new') Nouveau lot 
+	a.btn-lg.btn.btn-block.btn-primary(href='/plants/#{id}/lots/new') Nouvelle arrivée 
 		span.glyphicon.glyphicon-plus-sign

@@ -1,0 +1,34 @@
+.modal.fade#modal(role='dialog', aria-labelledby='outsModal'): .modal-dialog
+	.modal-content
+		.modal-header
+			button.close(type='button', data-dismiss='modal', aria-hdden='true') &times;
+			h4.modal-title Sorties vers production du lot
+		.modal-body
+			#status(data-bind="visible: !loading") Chargement des données depuis le serveur...
+			.table-responsive#trOuts: table.table-striped.table-hover.table
+				thead
+					th Date
+					th Quantité brute
+					th Quantité nette
+				tbody(data-bind="foreach: outs")
+					tr
+						td(data-bind="localeDate: date")
+						td(data-bind="text: raw")
+						td(data-bind="text: net")
+			#newOut(data-bind="visible: adding")
+				form.from-horizontal(role='form', method='post')
+					fieldset: legend Nouvelle sortie
+						.form-group
+							label.control-label(for='date') Date
+							input#date.form-control.input-lg(type='date', name='date', data-bind='today')
+						.form-group
+							label.control-label(for='raw') Quantité brute
+							input#raw.form-control.input-lg(type='number', min=0, name='raw')
+						.form-group
+							label.control-label(for='net') Quantité nette
+							input#net.form-control.input-lg(type='number', min=0, name='net')
+						button.btn.btn-primary.btn-block.btn-lg(type='button', data-bind='click: addOut') Ajouter 
+							span.glyphicon.glyphicon-plus-sign
+		.modal-footer
+			button.btn.btn-default(data-dismiss='modal', type='button') Fermer
+			button.btn.btn-primary(data-bind='disable: adding, click: newOut', type='button') Nouvelle sortie

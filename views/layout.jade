@@ -7,6 +7,20 @@ html(lang='fr')
 		link(rel='stylesheet', href='/bootstrap/dist/css/bootstrap.min.css')
 		script(src='/javascripts/jquery/dist/jquery.min.js')
 		script(src='/bootstrap/dist/js/bootstrap.min.js')
+		script(src='/javascripts/knockout/build/output/knockout-latest.debug.js')
+		script.
+			var viewModel;
+			ko.bindingHandlers.localeDate = {
+				init: function (element, arg) {
+					element.textContent = new Date(arg()).toLocaleDateString();
+				}
+			};
+			ko.bindingHandlers.today = {
+				init: function (element) {
+					element.valueAsDate = new Date();
+				}
+			};
+		block headTail
 	body
 		nav.navbar.navbar-default(role='navigation')
 			.navbar-header
@@ -31,3 +45,4 @@ html(lang='fr')
 		.container
 			block content
 			footer: p ©2014 bel3atar
+		script ko.applyBindings(viewModel);
