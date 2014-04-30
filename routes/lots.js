@@ -15,7 +15,7 @@ module.exports = function (app) {
 			function (err, data) {
 				if (err) next(err);
 				else if (!data) next();
-				else res.json(data.lots[0].outs);
+				else res.json(data.lots[0]);
 			}
 		);
 	});

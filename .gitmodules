@@ -16,3 +16,6 @@
 [submodule "public/javascripts/jquery-latitude-longitude-picker-gmaps"]
 	path = public/javascripts/jquery-latitude-longitude-picker-gmaps
 	url = https://github.com/wimagguc/jquery-latitude-longitude-picker-gmaps
+[submodule "public/javascripts/Knockout-Validation"]
+	path = public/javascripts/Knockout-Validation
+	url = https://github.com/Knockout-Contrib/Knockout-Validation

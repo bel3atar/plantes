@@ -1,35 +1,55 @@
 viewModel = {
 	outs: ko.observableArray(),
+	raw: ko.observable(0),
+	net: ko.observable(0),
+	remaining: ko.observable(),
 	loading: ko.observable(true),
 	adding: ko.observable(false),
 	lotId: ko.observable(),
 	setLotId: function (id) {
-		viewModel.lotId(id);
-		viewModel.loadData();
+		this.lotId(id);
+		this.loadData();
 	},
 	newOut: function () {
-		viewModel.adding(true);
+		this.adding(true);
 		$('#trOuts').slideUp();
 		$('#newOut').slideDown();
 	},
 	addOut: function () {
 		$.post(
-			'/lots/' + viewModel.lotId() + '/outs',
+			'/lots/' + this.lotId() + '/outs',
 			{date: $('#date').val(), raw: $('#raw').val(), net: $('#net').val()}, 
-			viewModel.loadData
+			this.loadData
 		);
 	},
 	loadData: function () {
-		viewModel.loading(true);
-		$.getJSON('/lots/' + viewModel.lotId() + '/outs', function (outs) {
-			viewModel.outs(outs);
-			viewModel.loading(false);
-			viewModel.adding(false);
+		var self = this;
+		self.loading(true);
+		$.getJSON('/lots/' + self.lotId() + '/outs', function (data) {
+			console.log('got data');
+			console.log(data);
+			var sum = .0;
+			for (var i = 0; i < data.outs.length; ++i)
+				sum += data.outs[i].raw;
+			self.remaining(data.quantity - sum);
+			self.outs(data.outs);
+			self.loading(false);
+			self.adding(false);
 			$('#newOut').hide();
 			$('#trOuts').show();
 		});
 	}
 };
+viewModel.net.extend({
+	required: true,
+	min: 0,
+	max: viewModel.raw
+});
+viewModel.raw.extend({
+	required: true,
+	min: viewModel.net,
+	max: viewModel.remaining
+});
 $('.modal').hide().on('show.bs.modal', function () {
 	viewModel.loadData();
 	$('#newOut').hide();

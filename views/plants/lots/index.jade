@@ -1,4 +1,7 @@
 extends ../../layout
+block headTail
+	script(src='/javascripts/Knockout-Validation/Dist/knockout.validation.min.js')
+	//script ko.validation.configure({insertMessages: false});
 block content
 	if lots.length !== 0
 		style tbody tr { cursor: pointer }

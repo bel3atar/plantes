@@ -20,13 +20,19 @@
 					fieldset: legend Nouvelle sortie
 						.form-group
 							label.control-label(for='date') Date
-							input#date.form-control.input-lg(type='date', name='date', data-bind='today')
-						.form-group
+							input#date.form-control.input-lg(
+								type='date', name='date', data-bind='today'
+							)
+						.form-group(data-bind="css: {'has-error': !raw.isValid()}")
 							label.control-label(for='raw') Quantité brute
-							input#raw.form-control.input-lg(type='number', min=0, name='raw')
-						.form-group
+							input#raw.form-control.input-lg(
+								data-bind="value: raw",
+								type='number', min=0, name='raw')
+						.form-group(data-bind="css: {'has-error': !net.isValid()}")
 							label.control-label(for='net') Quantité nette
-							input#net.form-control.input-lg(type='number', min=0, name='net')
+							input#net.form-control.input-lg(
+								data-bind='value: net', type='number', min=0, name='net'
+							)
 						button.btn.btn-primary.btn-block.btn-lg(type='button', data-bind='click: addOut') Ajouter 
 							span.glyphicon.glyphicon-plus-sign
 		.modal-footer
