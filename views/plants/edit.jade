@@ -1,6 +1,6 @@
 extends ../layout
 block content
-	form(action='/plants/#{plant._id}', role='form', method='post')
+	form(enctype='multipart/form-data', action='/plants/#{plant._id}', role='form', method='post')
 		input(type='hidden', name='_method', value='put')
 		.form-group
 			label(for="nom") Nom
@@ -8,5 +8,8 @@ block content
 		.form-group
 			label(for="desc") Description
 			textarea#desc.form-control(name='desc')= plant.desc
+		.form-group
+			label(for="pic") Image
+			input#pic.form-control(type='file', name='pic')
 		.form-group
 			button.btnbtn-default(type="submit") Modifier

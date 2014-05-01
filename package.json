@@ -11,6 +11,8 @@
 		"mongoose": "*",
 		"morgan": "*",
 		"body-parser": "*",
-		"method-override": "*"
+		"method-override": "*",
+		"passport": "*",
+		"multer": "*"
   }
 }

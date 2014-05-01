@@ -9,6 +9,7 @@ app.set('view engine', 'jade');
 
 app.use(require('morgan')({format: 'dev'}));
 app.use(require('body-parser')());
+app.use(require('multer')({dest: './public/images/'}));
 app.use(require('method-override')());
 
 app.use(express.static(path.join(__dirname, 'public')));

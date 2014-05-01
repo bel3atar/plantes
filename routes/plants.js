@@ -20,19 +20,33 @@ module.exports = function (app) {
 	});
 	//create
 	app.post('/plants', function (req, res, next) {
-		new Plant({ name: req.body.name }).save(function (err, pl) {
+		new Plant({
+			name: req.body.name,
+			desc: req.body.desc,
+			image: req.files.pic.name
+		}).save(function (err, pl) {
 			if (err) next(err);
+			else res.redirect('/plants');
 			console.log(pl + ' saved to db');
 		});
-		res.redirect('/plants');
 	});
 	//delete
 	app.delete('/plants/:plant', function (req, res, next) {
-		console.log('trynna remove plant with id=' + req.params.plant);
-		Plant.findByIdAndRemove(req.params.plant, function (err) { 
+		Plant.findByIdAndRemove(req.params.plant, function (err, pl) { 
 			if (err) next(err);
+			else {
+				console.log('plant removed from db, trying to delete its image file');
+				require('fs').unlink('./public/images/' + pl.image, function (uerr) {
+					if (uerr) {
+						console.error(uerr);
+						next(uerr);
+					} else {
+						console.log('image file deleted');
+						res.redirect('/plants');
+					}
+				});
+			}
 		});
-		res.redirect('/plants');
 	});
 	//edit
 	app.get('/plants/:plant/edit', function (req, res, next) {
@@ -43,12 +57,17 @@ module.exports = function (app) {
 	});
 	//update
 	app.put('/plants/:plant', function (req, res, next) {
-		Plant.findByIdAndUpdate(req.params.plant, {
+		var update = req.files.pic.name ? {
 				name: req.body.name,
-				desc: req.body.desc
-			}, function (err, plant) {
+				desc: req.body.desc,
+				image: req.files.pic.name
+		} : {
+				name: req.body.name,
+				desc: req.body.desc,
+		};
+		Plant.findByIdAndUpdate(req.params.plant, update, function (err, plant) {
 				if (err) next(err);
-				res.redirect('/plants');
+				else res.redirect('/plants');
 			}
 		);
 	});
