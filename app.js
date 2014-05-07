@@ -15,6 +15,7 @@ app.use(require('method-override')());
 app.use(express.static(path.join(__dirname, 'public')));
 
 require('./routes/plants')(app);
+require('./routes/users')(app);
 
 app.get('/', function (req, res, next) { res.redirect('/plants') });
 if ('development' == app.get('env')) {
@@ -31,7 +32,6 @@ app.use(function (err, req, res, next) {
 	res.status(500);
 	res.render('error', {title: 'Erreur 500', error: req.path});
 });
-
 
 app.listen(app.get('port'));
 console.log('Express server listening on port ' + app.get('port'));

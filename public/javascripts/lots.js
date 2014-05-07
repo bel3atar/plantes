@@ -1,33 +1,45 @@
-viewModel = {
-	outs: ko.observableArray(),
-	raw: ko.observable(0),
-	net: ko.observable(0),
-	remaining: ko.observable(),
-	loading: ko.observable(true),
-	adding: ko.observable(false),
-	lotId: ko.observable(),
-	setLotId: function (id) {
+//
+var viewModel = function () {
+	var self = this;
+	self.outs = ko.observableArray();
+	self.remaining = ko.observable();
+	self.raw = ko.observable();
+	self.net = ko.observable().extend({
+		required: true,
+		min: 0,
+		max: self.raw
+	});
+	self.raw.extend({
+		required: true,
+		min: self.net,
+		max: self.remaining
+	});
+	this.validables = new ko.validatedObservable({
+		a: self.raw,
+		b: self.net
+	});
+	self.loading = ko.observable(true);
+	self.adding = ko.observable(false);
+	self.lotId = ko.observable();
+	self.setLotId = function (id) {
 		this.lotId(id);
 		this.loadData();
 	},
-	newOut: function () {
+	self.newOut = function () {
 		this.adding(true);
 		$('#trOuts').slideUp();
 		$('#newOut').slideDown();
 	},
-	addOut: function () {
+	self.addOut = function () {
 		$.post(
-			'/lots/' + this.lotId() + '/outs',
+			'/lots/' + self.lotId() + '/outs',
 			{date: $('#date').val(), raw: $('#raw').val(), net: $('#net').val()}, 
-			this.loadData
+			self.loadData
 		);
 	},
-	loadData: function () {
-		var self = this;
+	self.loadData = function () {
 		self.loading(true);
 		$.getJSON('/lots/' + self.lotId() + '/outs', function (data) {
-			console.log('got data');
-			console.log(data);
 			var sum = .0;
 			for (var i = 0; i < data.outs.length; ++i)
 				sum += data.outs[i].raw;
@@ -39,18 +51,10 @@ viewModel = {
 			$('#trOuts').show();
 		});
 	}
+	$('.modal').hide().on('show.bs.modal', function () {
+		self.loadData();
+		$('#newOut').hide();
+	});
 };
-viewModel.net.extend({
-	required: true,
-	min: 0,
-	max: viewModel.raw
-});
-viewModel.raw.extend({
-	required: true,
-	min: viewModel.net,
-	max: viewModel.remaining
-});
-$('.modal').hide().on('show.bs.modal', function () {
-	viewModel.loadData();
-	$('#newOut').hide();
-});
+var vm = new viewModel;
+ko.applyBindings(vm);

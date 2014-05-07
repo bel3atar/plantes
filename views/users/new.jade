@@ -1,0 +1,21 @@
+extends ../layout
+block content
+	form(action='/users', role='form', method='post')
+		.form-group
+			label(for="name") Nom
+			input#name.form-control(name="name")
+		.form-group
+			label(for="role") Rôle
+			select#role.form-control(name='role')
+				option(value='Client') Client
+				option(value='Administrateur') Administrateur
+				option(value='Responsable de stock') Responsable de stock
+				option(value='Responsable de production') Responsable de production
+		.form-group
+			label(for="username") Nom d'utilisateur
+			input#pic.form-control(type='test', name='username')
+		.form-group
+			label(for="password") Mot de passe
+			input#pic.form-control(type='password', name='password')
+		.form-group
+			button.btn.btn-default(type="submit") Ajouter

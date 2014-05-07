@@ -1,7 +1,4 @@
 extends ../../layout
-block headTail
-	script(src='/javascripts/Knockout-Validation/Dist/knockout.validation.min.js')
-	//script ko.validation.configure({insertMessages: false});
 block content
 	if lots.length !== 0
 		style tbody tr { cursor: pointer }
@@ -25,10 +22,13 @@ block content
 							td= lot.seller.name
 							td= lot.seller.tel
 		include outsModal
-		script(src='/javascripts/lots.js')
 	else
 		.jumbotron
 			h1 Pas de lots
 			p Il n'y a pas de lots en stock pour la plante #{plant}
 	a.btn-lg.btn.btn-block.btn-primary(href='/plants/#{id}/lots/new') Nouvelle arrivée 
 		span.glyphicon.glyphicon-plus-sign
+block bodyTail
+	script(src='/javascripts/Knockout-Validation/Dist/knockout.validation.min.js')
+	script(src='/javascripts/Knockout-Validation/Localization/fr-FR.js')
+	script(src='/javascripts/lots.js')

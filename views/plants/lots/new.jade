@@ -1,7 +1,4 @@
 extends ../../layout
-block headTail
-	//script(src='/javascripts/openlayers/lib/OpenLayers.js')
-	//script(src='/javascripts/jquery-latitude-longitude-picker-gmaps/js/jquery-gmaps-latlon-picker.js')
 block content
 	h1 Nouveau lot
 	form(role='form', method='post', action='/plants/#{plant}/lots')
@@ -27,3 +24,4 @@ block content
 		.form-group: .input-group-lg
 			button.btn.btn-primary.btn-lg.btn-block(type='submit') Ajouter 
 				span.glyphicon.glyphicon-plus-sign
+	script ko.applyBindings(null);

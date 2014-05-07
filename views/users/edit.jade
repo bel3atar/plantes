@@ -1,0 +1,20 @@
+extends ../layout
+block content
+	form(action='/users/#{user._id}', role='form', method='post')
+		input(type='hidden', name='_method', value='put')
+		.form-group
+			label(for="name") Nom
+			input#name.form-control(name="name", value=user.name)
+		.form-group
+			label(for="role") Rôle
+			select#role.form-control(name='role')
+				each role in ['Client', 'Administrateur', 'Responsable de stock', 'Responsable de production']
+					option(value=role, selected=role===user.role)= role
+		.form-group
+			label(for="username") Nom d'utilisateur
+			input#pic.form-control(type='test', value=user.username, name='username')
+		.form-group
+			label(for="password") Mot de passe
+			input#pic.form-control(type='password', placeholder='Laisser vide pour ne pas modifier', name='password')
+		.form-group
+			button.btn.btn-default(type="submit") Modifier

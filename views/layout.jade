@@ -9,7 +9,6 @@ html(lang='fr')
 		script(src='/bootstrap/dist/js/bootstrap.min.js')
 		script(src='/javascripts/knockout/build/output/knockout-latest.debug.js')
 		script.
-			var viewModel;
 			ko.bindingHandlers.localeDate = {
 				init: function (element, arg) {
 					element.textContent = new Date(arg()).toLocaleDateString();
@@ -17,32 +16,33 @@ html(lang='fr')
 			};
 			ko.bindingHandlers.today = {
 				init: function (element) {
-					element.valueAsDate = new Date();
+					element.valueAsDate = new Date;
 				}
 			};
 		block headTail
 	body
 		nav.navbar.navbar-default(role='navigation')
-			.navbar-header
-				button.navbar-toggle(type='button', data-toggle="collapse", data-target="#navbar-collapse")
-					span.sr-only Menu de navigation
-					span.icon-bar
-					span.icon-bar
-					span.icon-bar
-				a.navbar-brand(href='/') Greenex
-			#navbar-collapse.collapse.navbar-collapse
-				ul.nav.navbar-nav
-					li.active: a(href='#') Link
-					li: a(href='#') Link
-					li.dropdown
-						a.dropdown-toggle(data-toggle='dropdown', href='#') Dropdown
-							b.caret
-						ul.dropdown-menu
-							li: a(href='#') Action
-							li: a(href='#') Another action
-							li.divider
-							li: a(href='#') Sthg else here
+			.container-fluid
+				.navbar-header
+					button.navbar-toggle(type='button', data-toggle="collapse", data-target="#navbar-collapse")
+						span.sr-only Menu de navigation
+						span.icon-bar
+						span.icon-bar
+						span.icon-bar
+					a.navbar-brand(href='/') Greenex
+				#navbar-collapse.collapse.navbar-collapse
+					ul.nav.navbar-nav
+						li: a(href='/plants') Plantes
+						li: a(href='/users') Utilisateurs
+						li.dropdown
+							a.dropdown-toggle(data-toggle='dropdown', href='#') Mon compte
+								b.caret
+							ul.dropdown-menu
+								li: a(href='#') Mes paramètres
+								li: a(href='#') Autre chose
+								li.divider
+								li: a(href='#') Me déconnecter
 		.container
 			block content
 			footer: p ©2014 bel3atar
-		script ko.applyBindings(viewModel);
+		block bodyTail

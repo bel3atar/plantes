@@ -33,7 +33,7 @@
 							input#net.form-control.input-lg(
 								data-bind='value: net', type='number', min=0, name='net'
 							)
-						button.btn.btn-primary.btn-block.btn-lg(type='button', data-bind='click: addOut') Ajouter 
+						button.btn.btn-primary.btn-block.btn-lg(type='button', data-bind='click: addOut, disable: !validables.isValid()') Ajouter 
 							span.glyphicon.glyphicon-plus-sign
 		.modal-footer
 			button.btn.btn-default(data-dismiss='modal', type='button') Fermer
