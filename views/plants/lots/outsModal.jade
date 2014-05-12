@@ -2,7 +2,7 @@
 	.modal-content
 		.modal-header
 			button.close(type='button', data-dismiss='modal', aria-hdden='true') &times;
-			h4.modal-title Sorties vers production du lot
+			h4.modal-title(data-bind='text: modalTitle')
 		.modal-body
 			#status(data-bind="visible: !loading") Chargement des données depuis le serveur...
 			.table-responsive#trOuts: table.table-striped.table-hover.table
@@ -11,13 +11,13 @@
 					th Quantité brute
 					th Quantité nette
 				tbody(data-bind="foreach: outs")
-					tr
+					tr(data-bind="attr: {id: _id}, click: $parent.toggleFinal")
 						td(data-bind="localeDate: date")
 						td(data-bind="text: raw")
 						td(data-bind="text: net")
-			#newOut(data-bind="visible: adding")
+			#newOut
 				form.from-horizontal(role='form', method='post')
-					fieldset: legend Nouvelle sortie
+					fieldset
 						.form-group
 							label.control-label(for='date') Date
 							input#date.form-control.input-lg(
@@ -27,14 +27,19 @@
 							label.control-label(for='raw') Quantité brute
 							input#raw.form-control.input-lg(
 								data-bind="value: raw",
-								type='number', min=0, name='raw')
+								type='number', name='raw')
 						.form-group(data-bind="css: {'has-error': !net.isValid()}")
 							label.control-label(for='net') Quantité nette
 							input#net.form-control.input-lg(
-								data-bind='value: net', type='number', min=0, name='net'
+								data-bind='value: net', type='number', name='net'
 							)
-						button.btn.btn-primary.btn-block.btn-lg(type='button', data-bind='click: addOut, disable: !validables.isValid()') Ajouter 
+						button.btn.btn-primary.btn-block.btn-lg(
+							type='button', 
+							data-bind='click: addOut, disable: !validables.isValid()'
+						) Ajouter 
 							span.glyphicon.glyphicon-plus-sign
 		.modal-footer
 			button.btn.btn-default(data-dismiss='modal', type='button') Fermer
-			button.btn.btn-primary(data-bind='disable: adding, click: newOut', type='button') Nouvelle sortie
+			button.btn.btn-primary(
+				data-bind='disable: adding, click: newOut', type='button'
+			) Nouvelle sortie

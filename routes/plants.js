@@ -73,4 +73,5 @@ module.exports = function (app) {
 	});
 	//sub-resources
 	require('./lots.js')(app);
+	require('./outs.js')(app);
 };
